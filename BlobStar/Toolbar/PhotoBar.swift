@@ -5,7 +5,7 @@ struct PhotoBar: View {
 
     @State private var timeInterval: Double = 42        // minutes
     @State private var timeRemaining: Double = 10 * 60  // seconds
-    @State private var isActive = true
+    @EnvironmentObject var state: AppState
     private var settings = Settings.shared
 
     let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common)
@@ -71,7 +71,7 @@ struct PhotoBar: View {
             }
         }
         .onReceive(timer) { time in
-            guard isActive else {
+            guard state.isActive else {
                 return
             }
             if timeRemaining > 1 {
@@ -80,12 +80,6 @@ struct PhotoBar: View {
             }
             timeRemaining = timeInterval * 60
             takePhoto()
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-            isActive = false
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-            isActive = true
         }
     }
 }

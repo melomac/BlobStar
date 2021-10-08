@@ -17,6 +17,7 @@ The name is a word play on "blob", the other name The French 🇫🇷 give to th
 * Store device location to photo EXIF data
 * Store photos to Photo Library
 * Persistent user settings
+* Prevent device from sleeping when app is active
 
 ## Privacy settings 🔒
 

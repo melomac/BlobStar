@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    let appState = AppState()
+
     var body: some View {
         ZStack {
 #if targetEnvironment(simulator)
@@ -10,14 +13,12 @@ struct ContentView: View {
 #endif
             Toolbar()
         }
+        .environmentObject(appState)
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Text("CameraView placeholder")
-            Toolbar()
-        }
+        ContentView()
     }
 }
