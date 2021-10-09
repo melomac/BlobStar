@@ -28,14 +28,14 @@ struct TorchBar: View {
                     torch(mode: .off)
                     torchState = false
                 } else {
-                    torch(mode: .on, level: torchLevel)
+                    let level = torchLevel > 0 ? torchLevel : 1
+                    torch(mode: .on, level: level)
                     torchState = true
                 }
             })
                 .accessibilityLabel("Toggle torch")
-                .disabled(torchLevel == 0)
             VStack {
-                Slider(value: $torchLevel, in: 0.0...1.0, step: 0.01)
+                Slider(value: $torchLevel, in: 0...1, step: 0.01)
                     .accessibilityLabel("Torch level in percentages")
                     .frame(width: 100)
                     .onAppear {

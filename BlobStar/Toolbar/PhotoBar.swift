@@ -32,6 +32,7 @@ struct PhotoBar: View {
                 }
             }
         } else {
+            torch(mode: .off)
             DispatchQueue.main.async {
                 CameraViewController.shared.takePhoto(flash: flashMode)
             }
