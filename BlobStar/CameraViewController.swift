@@ -6,14 +6,13 @@ import CoreLocation
 import Photos
 import os
 
-
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     static let shared = CameraViewController()
 
     private var session = AVCaptureSession()
     private var photoOutput = AVCapturePhotoOutput()
     private var previewLayer: AVCaptureVideoPreviewLayer!
-    private var completionHandler: ((Bool, Error?) -> Void)? = nil
+    private var completionHandler: ((Bool, Error?) -> Void)?
     private let locationManager = CLLocationManager()
 
     var location: CLLocation? {
@@ -58,9 +57,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         default:
             fatalError("Session not authorized.")
         }
-        session.beginConfiguration()
         session.sessionPreset = .photo
-        session.commitConfiguration()
     }
 
     private func setupInput() {
@@ -71,9 +68,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         else {
             fatalError("Setup input error.")
         }
-        session.beginConfiguration()
         session.addInput(input)
-        session.commitConfiguration()
     }
 
     private func setupOutput() {
@@ -83,9 +78,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
         guard session.canAddOutput(photoOutput) else {
             fatalError("Setup output error.")
         }
-        session.beginConfiguration()
         session.addOutput(photoOutput)
-        session.commitConfiguration()
     }
 
     private func setupPreview() {
@@ -103,7 +96,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
         let bounds = view.layer.bounds
         previewLayer.bounds = bounds
-        previewLayer.position = CGPoint.init(x: bounds.midX, y: bounds.midY)
+        previewLayer.position = CGPoint(x: bounds.midX, y: bounds.midY)
         previewLayer.videoGravity = .resizeAspectFill
     }
 
@@ -164,14 +157,12 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
     }
 }
 
-
 struct CameraView: UIViewControllerRepresentable {
     typealias UIViewControllerType = CameraViewController
 
     func makeUIViewController(context: Context) -> CameraViewController {
-        return CameraViewController.shared
+        CameraViewController.shared
     }
 
-    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {
-    }
+    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {}
 }

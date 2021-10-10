@@ -1,7 +1,6 @@
 import UIKit
 import AVFoundation
 
-
 extension UIDeviceOrientation {
     var videoOrientation: AVCaptureVideoOrientation? {
         switch self {
@@ -35,7 +34,6 @@ extension UIInterfaceOrientation {
         }
     }
 }
-
 
 extension AVCaptureDevice.FlashMode {
 

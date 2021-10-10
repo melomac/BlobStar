@@ -3,12 +3,12 @@ import AVFoundation
 
 struct FlashBar: View {
 
-    @State var flashMode: Int = 2
+    @State var flashMode: Int = AVCaptureDevice.FlashMode.auto.rawValue
     private var settings = Settings.shared
 
     private var flashModeIcon: String {
         guard
-            let mode = AVCaptureDevice.FlashMode.init(rawValue: flashMode),
+            let mode = AVCaptureDevice.FlashMode(rawValue: flashMode),
             let systemIcon = mode.systemIcon
         else {
             return "exclamationmark.triangle.fill"
@@ -18,7 +18,7 @@ struct FlashBar: View {
 
     private var flashModeString: String {
         guard
-            let mode = AVCaptureDevice.FlashMode.init(rawValue: flashMode),
+            let mode = AVCaptureDevice.FlashMode(rawValue: flashMode),
             let description = mode.description
         else {
             return "Unknown"

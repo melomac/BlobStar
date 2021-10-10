@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
 
-    let appState = AppState()
+    private let appState = AppState()
 
     var body: some View {
         ZStack {

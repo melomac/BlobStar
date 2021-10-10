@@ -17,7 +17,7 @@ struct PhotoBar: View {
     }
 
     private func takePhoto() {
-        let flashMode = AVCaptureDevice.FlashMode.init(rawValue: settings.flashMode) ?? .auto
+        let flashMode = AVCaptureDevice.FlashMode(rawValue: settings.flashMode) ?? .auto
         let torchLevel = settings.torchLevel
 
 #if targetEnvironment(simulator)
