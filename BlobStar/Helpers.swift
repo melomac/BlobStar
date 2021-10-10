@@ -1,4 +1,5 @@
 import AVFoundation
+import os
 
 func torch(mode: AVCaptureDevice.TorchMode, level: Float = AVCaptureDevice.maxAvailableTorchLevel) {
     guard
@@ -19,7 +20,7 @@ func torch(mode: AVCaptureDevice.TorchMode, level: Float = AVCaptureDevice.maxAv
         }
         device.unlockForConfiguration()
     } catch {
-        print("Torch error: \(error.localizedDescription) mode: \(mode) level: \(level)")
+        Logger().error("Torch error: \(error.localizedDescription) mode: \(mode.rawValue) level: \(level)")
         return
     }
 }

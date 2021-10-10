@@ -37,8 +37,6 @@ You can press the Camera 📷 button to trigger the authorization first.
 The app raises a `fatalError()` when it can't access the camera 🐞 and no photo is saved when it can't access the Photo Library.
 This is by ~~poor~~ design because of rushed deadlines, and Privacy controls can later be fixed in the BlobStar section of the Settings app.
 
-Once Privacy settings are in order, it might be a good idea to [quit and reopen](https://support.apple.com/guide/iphone/quit-and-reopen-an-app-iph83bfec492/ios) the app...
-
 ## Build
 
 The app was developed with [Xcode](https://developer.apple.com/xcode/) version 13 and tested on recent devices running iOS version 15.

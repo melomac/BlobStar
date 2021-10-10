@@ -1,5 +1,6 @@
 import SwiftUI
 import AVFoundation
+import os
 
 struct PhotoBar: View {
 
@@ -22,7 +23,7 @@ struct PhotoBar: View {
 #if targetEnvironment(simulator)
         let flashModeString = flashMode.description ?? "nil"
         let torchLevelString = String(format: "%.2f", torchLevel)
-        print("Take photo with flashMode: \(flashModeString) torchLevel: \(torchLevelString)")
+        Logger().info("Take photo with flashMode: \(flashModeString) torchLevel: \(torchLevelString)")
 #else
         if torchLevel > 0 {
             torch(mode: .on, level: torchLevel)
@@ -71,7 +72,7 @@ struct PhotoBar: View {
                 .frame(alignment: .center)
             }
         }
-        .onReceive(timer) { time in
+        .onReceive(timer) { _ in
             guard state.isActive else {
                 return
             }

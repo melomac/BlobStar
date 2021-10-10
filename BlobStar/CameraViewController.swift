@@ -4,6 +4,7 @@ import SwiftUI
 import AVFoundation
 import CoreLocation
 import Photos
+import os
 
 
 class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
@@ -147,7 +148,7 @@ class CameraViewController: UIViewController, AVCapturePhotoCaptureDelegate {
 
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard error == nil else {
-            print("Error capturing photo: \(error!.localizedDescription)")
+            Logger().error("Error capturing photo: \(error!.localizedDescription)")
             return
         }
         PHPhotoLibrary.requestAuthorization { status in
