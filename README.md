@@ -5,7 +5,7 @@ iOS application to automagically control the device torch/flash and capture phot
 The software was quickly drafted to monitor some [Physarum Polycephalum](https://en.wikipedia.org/wiki/Physarum_polycephalum) evolution during the [Mission Alpha](https://missionalpha.cnes.fr/) assignment [#EleveTonBlob](https://disciplines.ac-toulouse.fr/daac/elevetonblob-lexperience-educative-du-cnes-pour-la-mission-alpha).
 This custom project was developed by a volunteer parent to help a primary school in French Jura, not so far away from where the first [Comté](https://france3-regions.francetvinfo.fr/bourgogne-franche-comte/jura/espace-thomas-pesquet-savoure-du-comte-1207393.html) 🧀 to the ISS was produced.
 
-Photos are stored in the device Photo Library and are meant to be aggregated in a single movie file later, using [FFmpeg](https://www.ffmpeg.org/) for example.
+Photos are stored in the device Photo Library and are meant to be aggregated in a movie file later. Consult the [post-processing](#post-processing) section for examples.
 
 The name is a word play on "blob", the other name The French 🇫🇷 give to the Physarum Polycephalum, and The B-52's track [Rock Lobster](https://www.youtube.com/watch?v=n4QSYx4wVQg) 🦞
 
@@ -18,6 +18,12 @@ The name is a word play on "blob", the other name The French 🇫🇷 give to th
 * Store photos to Photo Library
 * Persistent user settings
 * Prevent device from sleeping when app is active
+
+## Preview
+
+A picture is worth a thousand words, so here you have a Simulator screen shot:
+
+![BlobStar Simulator Preview](./Resources/Simulator.jpg)
 
 ## Privacy settings 🔒
 
@@ -47,11 +53,37 @@ Anyone with a Mac and registered as a free [Developer](https://developer.apple.c
 The project source code is provided as is and it's not ok to contact me for support (this file covers pretty much everything you need) or feature requests beyond the scope of the mission.
 Responsible pull requests and forks are welcome.
 
-## Preview
+## Post-processing
 
-A picture is worth a thousand words, so here you have a Simulator screen shot:
+On macOS, you can export the photos from the device using either _Photos_ or _Image Capture_ app, then use the [Open Image Sequence](https://support.apple.com/guide/quicktime-player/create-a-movie-with-an-image-sequence-qtp315cce984) command in _QuickTime Player_ app to create the video file.
 
-![BlobStar Simulator Preview](./Resources/Simulator.jpg)
+Advanced users may prefer running:
+
+* the scriptable image processing system `sips` to convert [HEIC](https://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format) images to [PNG](https://en.wikipedia.org/wiki/Portable_Network_Graphics) or [TIFF](https://en.wikipedia.org/wiki/TIFF)
+* [FFmpeg](https://trac.ffmpeg.org/wiki/Slideshow) to create a [ProRes](https://en.wikipedia.org/wiki/Apple_ProRes) or [H.264](https://en.wikipedia.org/wiki/Advanced_Video_Coding) sequential movie file
+
+Example:
+
+```bash
+# Go to photo directory
+cd /path/to/photo/dir
+
+# Convert HEIC files to PNG
+find . -name "*.HEIC" | sort | while read filename
+do
+    sips -s format png "${filename}" -o "${filename%.*}.png"
+done
+
+# Create a 12 frames per second H.264 video file
+ffmpeg -framerate 12 -pattern_type glob -i "*.png" -c:v libx264 -pix_fmt yuv420p output.mp4
+
+# Create a 12 frames per second ProRes video file
+ffmpeg -framerate 12 -pattern_type glob -i "*.png" -c:v prores -profile:v 3 -pix_fmt yuv422p10 output.mov
+```
+
+And here you have `ffmpeg` options to eventually [transpose](https://ffmpeg.org/ffmpeg-filters.html#transpose-1) images by 90 degrees clockwise: `-vf "transpose=1"`
+
+Use [Homebrew](https://brew.sh/) package manager to install FFmpeg and its dependencies 🍺
 
 ## Acknowledgments
 
